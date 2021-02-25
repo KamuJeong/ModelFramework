@@ -7,7 +7,7 @@ namespace Kamu.ModelFramework
     /// <summary>
     /// Management of live models 
     /// </summary>
-    public class ModelInventory : ModelContainer
+    public sealed class ModelInventory : ModelContainer
     {
         private Dictionary<Uri, Model> _modelCollection = new Dictionary<Uri, Model>();
 

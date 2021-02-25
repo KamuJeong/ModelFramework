@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace Kamu.ModelFrameWorkTests
 {
-    public class EmptyMachine : ModelProvider
+    class EmptyMachine : ModelProvider
     {
         /// <summary>
         /// Cliche part

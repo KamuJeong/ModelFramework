@@ -3,7 +3,7 @@ using Kamu.ModelFramework;
 
 namespace Kamu.ModelFrameWorkTests
 {
-    public class EmptyModel : Model
+    class EmptyModel : Model
     {
     }
 }

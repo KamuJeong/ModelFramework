@@ -47,5 +47,16 @@ namespace Kamu.ModelFrameWorkTests
             
             Assert.AreEqual(new Uri("pump://here/?config"), modelUri.Model("config"));
         }
+
+        [TestMethod]
+        public void ShouldCompareLocationOfURIs()
+        {
+            Uri pumpInformation = new Uri("pump://here/?information");
+            Uri pumpLinkConfiguration = new Uri("pump.link://here/?configuration");
+            Uri pumpInformationThere = new  Uri("pump://there/?information");
+
+            Assert.IsTrue(pumpInformation.AreSameLocation(pumpLinkConfiguration));
+            Assert.IsFalse(pumpInformation.AreSameLocation(pumpInformationThere));
+        }
     }
 }

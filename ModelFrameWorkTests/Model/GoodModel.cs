@@ -3,7 +3,7 @@ using Kamu.ModelFramework;
 
 namespace Kamu.ModelFrameWorkTests
 {
-    public class GoodModel : Model
+    class GoodModel : Model
     {
     }    
 }

@@ -3,7 +3,7 @@ using Kamu.ModelFramework;
 
 namespace Kamu.ModelFrameworkTests.Provider
 {
-    public class NestProviders
+    class NestedProviders
     {
         public class NestedPublicProvider : ModelProvider
         {

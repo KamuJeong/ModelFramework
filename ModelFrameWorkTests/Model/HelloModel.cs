@@ -4,7 +4,7 @@ using Kamu.ModelFramework;
 
 namespace Kamu.ModelFrameWorkTests
 { 
-    public class HelloModel : Model
+    class HelloModel : Model
     {
         public EmptyModel Empty { get; }
 
