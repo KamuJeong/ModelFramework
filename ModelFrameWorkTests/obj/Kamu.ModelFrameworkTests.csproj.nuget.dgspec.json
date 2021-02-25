@@ -1,0 +1,128 @@
+{
+  "format": 1,
+  "restore": {
+    "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFrameWorkTests\\Kamu.ModelFrameworkTests.csproj": {}
+  },
+  "projects": {
+    "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFrameWorkTests\\Kamu.ModelFrameworkTests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFrameWorkTests\\Kamu.ModelFrameworkTests.csproj",
+        "projectName": "Kamu.ModelFrameworkTests",
+        "projectPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFrameWorkTests\\Kamu.ModelFrameworkTests.csproj",
+        "packagesPath": "C:\\Users\\정경훈\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFrameWorkTests\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\정경훈\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net47"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net47": {
+            "targetAlias": "net47",
+            "projectReferences": {
+              "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj": {
+                "projectPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net47": {
+          "targetAlias": "net47",
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "Microsoft.CSharp": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.7.1, )"
+            },
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.0, )",
+              "autoReferenced": true
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[1.3.0, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
+        "projectName": "Kamu.ModelFramework",
+        "projectPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
+        "packagesPath": "C:\\Users\\정경훈\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\정경훈\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net47"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net47": {
+            "targetAlias": "net47",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net47": {
+          "targetAlias": "net47",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.0, )",
+              "autoReferenced": true
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

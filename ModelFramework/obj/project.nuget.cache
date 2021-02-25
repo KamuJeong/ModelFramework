@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "YgUYdIjQSb24iFeJdSsJ60sEE+lQeDTH4hB1aU3id0QOqU4A0e2hfYgYMq8nRHJvPQoiD1avB9dxkcXOWJ+coA==",
+  "success": true,
+  "projectFilePath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\정경훈\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.0\\microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "C:\\Users\\정경훈\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net47\\1.0.0\\microsoft.netframework.referenceassemblies.net47.1.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

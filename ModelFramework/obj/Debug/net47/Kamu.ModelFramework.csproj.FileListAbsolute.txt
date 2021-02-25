@@ -1,0 +1,8 @@
+c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\bin\Debug\net47\Kamu.ModelFramework.dll
+c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\bin\Debug\net47\Kamu.ModelFramework.pdb
+c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\net47\Kamu.ModelFramework.csprojAssemblyReference.cache
+c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\net47\Kamu.ModelFramework.AssemblyInfoInputs.cache
+c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\net47\Kamu.ModelFramework.AssemblyInfo.cs
+c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\net47\Kamu.ModelFramework.csproj.CoreCompileInputs.cache
+c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\net47\Kamu.ModelFramework.dll
+c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\net47\Kamu.ModelFramework.pdb
