@@ -9,50 +9,61 @@ namespace Kamu.ModelFramework
     {
         private static Dictionary<string, Func<Uri, ModelContainer, ModelProvider>> _providerFactory = new Dictionary<string, Func<Uri, ModelContainer, ModelProvider>>();
 
-        /// <summary>
-        /// Factory function registration for a provider with a corresponding scheme
-        /// </summary>
-        /// <param name="scheme"> URI's scheme for provider ex) "pump", "chromatogram" etc. </param>
-        /// <param name="factory"> factory function to instantiate a provider </param>
-        public static void Register(string scheme, Func<Uri, ModelContainer, ModelProvider> factory) => _providerFactory.Add(scheme, factory);
-        
-        internal static ModelProvider Create(Uri uri, ModelContainer container) 
+        public static IEnumerable<string> Schemes => _providerFactory.Keys;
+
+        public static void Register(Type type, bool update = true)
         {
-            if(_providerFactory.TryGetValue(uri.Scheme, out var factory))
+            if (type.IsSubclassOf(typeof(ModelProvider)))
             {
-                return factory(uri, container);      
+                var schemeAttribute = type.GetCustomAttribute<SchemeAttribute>(false);
+                
+                if (schemeAttribute == null)
+                    throw new NotImplementedException(nameof(SchemeAttribute));
+
+                if (!update && _providerFactory.ContainsKey(schemeAttribute.Scheme))
+                    throw new ArgumentException($"{schemeAttribute.Scheme} is already registered.");
+
+                var constructorInfo = type.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null,
+                                                        new Type[] { }, null);
+                var uriSetMethod = typeof(ModelProvider).GetProperty("Uri").GetSetMethod(true);
+                var modelsSetMethod = typeof(ModelProvider).GetProperty("Models", BindingFlags.Instance | BindingFlags.NonPublic)
+                                                            .GetSetMethod(true);
+                _providerFactory[schemeAttribute.Scheme] = (u, c) =>
+                    {
+                        var provider = constructorInfo.Invoke(null) as ModelProvider;
+                        uriSetMethod.Invoke(provider, new object[] { u });
+                        modelsSetMethod.Invoke(provider, new object[] { c });
+                        return provider;
+                    };
+            }
+        }
+
+        public static void Reset() => _providerFactory.Clear();
+
+        internal static ModelProvider Create(Uri uri, ModelContainer container)
+        {
+            if (_providerFactory.TryGetValue(uri.Scheme, out var factory))
+            {
+                return factory(uri, container);
             }
 
-            foreach(var type  in AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).Where(t => t.IsSubclassOf(typeof(ModelProvider))))
+            var schemes = Schemes.ToArray();
+            foreach (var type in AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes())
+                                                                        .Where(t => t.IsSubclassOf(typeof(ModelProvider))))
             {
-                var attr = type.GetCustomAttribute<SchemeAttribute>(false);
-                if(attr != null && string.Equals(attr.Scheme.ToLower(), uri.Scheme))
+                var schemeAttribute = type.GetCustomAttribute<SchemeAttribute>(false);
+                if (schemeAttribute != null && !schemes.Contains(schemeAttribute.Scheme))
                 {
-                    var constructorInfo = type.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, 
-                                                            new Type[] { }, null);
-                    var uriSetMethod = typeof(ModelProvider).GetProperty("Uri").GetSetMethod(true);
-                    var modelsSetMethod = typeof(ModelProvider).GetProperty("Models", BindingFlags.Instance | BindingFlags.NonPublic)
-                                                                .GetSetMethod(true);
-                    if (constructorInfo != null)
-                    {
-                        Register(uri.Scheme, (u, c) => 
-                        {        
-                            var provider = constructorInfo.Invoke(null) as ModelProvider;
-                            uriSetMethod.Invoke(provider, new object[] { u });
-                            modelsSetMethod.Invoke(provider, new object[] { c });
-                            return provider;
-                        });
-                    }
+                    Register(type, update: false);
                 }
             }
 
-            if(_providerFactory.TryGetValue(uri.Scheme, out factory))
+            if (_providerFactory.TryGetValue(uri.Scheme, out factory))
             {
-                return factory(uri, container);      
+                return factory(uri, container);
             }
+
             throw new ArgumentException($"\'{uri.Scheme}\' is not supported.");
         }
-
-        public static IEnumerable<string> Schemes => _providerFactory.Keys;
     }
 }

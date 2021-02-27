@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Kamu.ModelFrameWorkTests
+namespace Kamu.ModelFrameworkTests
 {
     [Scheme("hello")]
     class HelloMachine : ModelProvider

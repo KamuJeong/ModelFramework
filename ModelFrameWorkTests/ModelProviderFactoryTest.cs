@@ -3,15 +3,27 @@ using System;
 using System.Linq;
 using Kamu.ModelFramework;
 
-namespace Kamu.ModelFrameWorkTests
+namespace Kamu.ModelFrameworkTests
 {
     [TestClass]
     public class ModelProviderFactoryTest
     {
         private ModelInventory Inventory = new ModelInventory();
 
+        [TestInitialize]
+        public void Initialize()
+        {
+            ModelProviderFactory.Register(typeof(EmptyMachine));
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            ModelProviderFactory.Reset();
+        }
+
         [TestMethod]
-        public void ShouldBeAbleToOpenAnyProviderWhichRegistersItsSchemeInStaticConstructor()
+        public void ShouldBeAbleToOpenAnyProviderThatHasSchemeAttribute()
         {   
             Uri Name = new Uri("hello://here/");
 
@@ -20,6 +32,14 @@ namespace Kamu.ModelFrameWorkTests
             Assert.AreNotEqual(0, Kamu.ModelFramework.ModelProviderFactory.Schemes.Count());
 
             Assert.IsTrue(Kamu.ModelFramework.ModelProviderFactory.Schemes.Contains(Name.Scheme));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ShouldNotBeProvidersWhichHaveTheSameSchemeAttribute()
+        {
+            ModelProviderFactory.Reset();
+            Inventory.Open(new Uri("empty://here/")); 
         }
 
         [TestMethod]
@@ -38,6 +58,13 @@ namespace Kamu.ModelFrameWorkTests
 
             Assert.IsTrue(Inventory.Open(Name));
             Assert.IsTrue(Kamu.ModelFramework.ModelProviderFactory.Schemes.Contains(Name.Scheme));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void ShouldNotRegisterProviderThatDoesNotHaveSchemeAttributeManually()
+        {
+            ModelProviderFactory.Register(typeof(NoSchemeProvider));
         }
     }
 }

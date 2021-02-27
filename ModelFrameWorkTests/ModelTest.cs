@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Kamu.ModelFramework;
 using System;
 
-namespace Kamu.ModelFrameWorkTests
+namespace Kamu.ModelFrameworkTests
 {
     [TestClass]
     public class ModelTest
@@ -17,6 +17,7 @@ namespace Kamu.ModelFrameWorkTests
         [TestInitialize]
         public void Initialize()
         {
+            ModelProviderFactory.Register(typeof(EmptyMachine));
             Assert.IsTrue(Inventory.Open(Name.Provider()));
         }
 
@@ -24,6 +25,7 @@ namespace Kamu.ModelFrameWorkTests
         public void CleanUp()
         {
             Inventory.Close(Name.Provider());
+            ModelProviderFactory.Reset();
         }
 
         #endregion

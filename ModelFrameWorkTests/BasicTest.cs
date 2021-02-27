@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Kamu.ModelFramework;
 
-namespace Kamu.ModelFrameWorkTests
+namespace Kamu.ModelFrameworkTests
 {
     [TestClass]
     public class BasicTest

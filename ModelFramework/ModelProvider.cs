@@ -11,6 +11,10 @@ namespace Kamu.ModelFramework
         
         protected ModelContainer Models { get; private set; }
 
+        protected ModelProvider()
+        {      
+        }
+
         public virtual bool Open() => true;
 
         public virtual void Close()     

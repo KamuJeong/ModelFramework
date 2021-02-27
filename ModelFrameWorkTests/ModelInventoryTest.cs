@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 
 
-namespace Kamu.ModelFrameWorkTests
+namespace Kamu.ModelFrameworkTests
 {
     [TestClass]
     public class ModelInventoryTest
@@ -19,6 +19,7 @@ namespace Kamu.ModelFrameWorkTests
         [TestInitialize]
         public void Initialize()
         {
+            ModelProviderFactory.Register(typeof(EmptyMachine));
             Assert.IsTrue(Inventory.Open(Name.Provider()));
         }
 
@@ -26,6 +27,7 @@ namespace Kamu.ModelFrameWorkTests
         public void CleanUp()
         {
             Inventory.Close(Name.Provider());
+            ModelProviderFactory.Reset();
         }
 
         #endregion
