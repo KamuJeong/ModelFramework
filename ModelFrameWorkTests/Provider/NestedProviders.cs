@@ -5,26 +5,13 @@ namespace Kamu.ModelFrameworkTests.Provider
 {
     class NestedProviders
     {
+        [Scheme("nested.public")]
         public class NestedPublicProvider : ModelProvider
         {
-            /// <summary>
-            /// Cliche part
-            /// 1. Set an apropriate name to the static readonly 'Scheme' property
-            /// 2. Define a staic constructor to register a provider factory function
-            /// 3. Define instance constructor to register model factory functions
-            /// </summary>
-
-            #region [Preparation]
-
-            public static string Scheme { get; } = "nested.public";
-
-            static NestedPublicProvider() => Kamu.ModelFramework.ModelProviderFactory.Register(Scheme, (uri, container) => new NestedPublicProvider(uri, container));
-
-            private NestedPublicProvider(Uri uri, ModelContainer container) : base(uri, container)
+            protected override Model Create(string query)
             {
+                throw new NotImplementedException();
             }
-
-            #endregion
 
             public override void Save(Model model)
             {
@@ -40,28 +27,16 @@ namespace Kamu.ModelFrameworkTests.Provider
             {
                 throw new NotImplementedException();
             }
+
         }
 
+        [Scheme("nested.private")]
         private class NestedPrivateProvider : ModelProvider
         {
-            /// <summary>
-            /// Cliche part
-            /// 1. Set an apropriate name to the static readonly 'Scheme' property
-            /// 2. Define a staic constructor to register a provider factory function
-            /// 3. Define instance constructor to register model factory functions
-            /// </summary>
-
-            #region [Preparation]
-
-            public static string Scheme { get; } = "nested.private";
-
-            static NestedPrivateProvider() => Kamu.ModelFramework.ModelProviderFactory.Register(Scheme, (uri, container) => new NestedPrivateProvider(uri, container));
-
-            private NestedPrivateProvider(Uri uri, ModelContainer container) : base(uri, container)
+            protected override Model Create(string query)
             {
+                throw new NotImplementedException();
             }
-
-            #endregion
 
             public override void Save(Model model)
             {

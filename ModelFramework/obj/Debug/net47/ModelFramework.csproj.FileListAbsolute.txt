@@ -1,8 +1,0 @@
-c:\Users\정경훈\Documents\Visual Studio Code\Kamu\ModelFramework\ModelFramework\bin\Debug\net47\ModelFramework.dll
-c:\Users\정경훈\Documents\Visual Studio Code\Kamu\ModelFramework\ModelFramework\bin\Debug\net47\ModelFramework.pdb
-c:\Users\정경훈\Documents\Visual Studio Code\Kamu\ModelFramework\ModelFramework\obj\Debug\net47\ModelFramework.csprojAssemblyReference.cache
-c:\Users\정경훈\Documents\Visual Studio Code\Kamu\ModelFramework\ModelFramework\obj\Debug\net47\ModelFramework.AssemblyInfoInputs.cache
-c:\Users\정경훈\Documents\Visual Studio Code\Kamu\ModelFramework\ModelFramework\obj\Debug\net47\ModelFramework.AssemblyInfo.cs
-c:\Users\정경훈\Documents\Visual Studio Code\Kamu\ModelFramework\ModelFramework\obj\Debug\net47\ModelFramework.csproj.CoreCompileInputs.cache
-c:\Users\정경훈\Documents\Visual Studio Code\Kamu\ModelFramework\ModelFramework\obj\Debug\net47\ModelFramework.dll
-c:\Users\정경훈\Documents\Visual Studio Code\Kamu\ModelFramework\ModelFramework\obj\Debug\net47\ModelFramework.pdb

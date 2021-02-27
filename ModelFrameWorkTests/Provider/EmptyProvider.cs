@@ -6,34 +6,29 @@ using System.Runtime.CompilerServices;
 
 namespace Kamu.ModelFrameWorkTests
 {
+    [Scheme("empty")]
     class EmptyMachine : ModelProvider
     {
         /// <summary>
-        /// Cliche part
-        /// 1. Set an apropriate name to the static readonly 'Scheme' property
-        /// 2. Define a staic constructor to register a provider factory function
-        /// 3. Define instance constructor to register model factory functions
+        /// Model basic functions
+        /// 1. Create models
+        /// 2. Load models
+        /// 3. Update models
+        /// 4. Save models
         /// </summary>
+ 
+        #region [Create]
 
-        #region [Preparation]
-
-        public static string Scheme { get; } = "empty";
-        
-        static EmptyMachine() => Kamu.ModelFramework.ModelProviderFactory.Register(Scheme, (uri, container) => new EmptyMachine(uri, container));
-
-        private EmptyMachine(Uri uri, ModelContainer container) : base(uri, container)
+        protected override Model Create(string query)
         {
-            Register("empty", () => new EmptyModel());
+            switch(query)
+            {
+            case "empty":   return new EmptyModel();
+            }
+            return null;
         }
 
         #endregion
-
-        /// <summary>
-        /// Basic model management part
-        /// 1. Load override function
-        /// 1. Update override function
-        /// 2. Save override function
-        /// </summary>
 
         #region [Load]
 
@@ -63,12 +58,14 @@ namespace Kamu.ModelFrameWorkTests
             throw new NotImplementedException();
         }
 
+
+
         #endregion
 
         /// <summary>
         /// Model specific function
         /// </summary>
-        
+
         #region [Etc]
 
         #endregion

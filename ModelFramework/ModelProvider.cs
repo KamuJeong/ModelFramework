@@ -5,45 +5,11 @@ namespace Kamu.ModelFramework
 {
     public abstract class ModelProvider
     {
-        #region [Model factories]
+        #region [Provider primitives]
 
-        private Dictionary<string, Func<Model>> _modelFactory = new Dictionary<string, Func<Model>>();
-
-        protected void Register(string query, Func<Model> factory) => _modelFactory.Add(query, factory);
-
-        #endregion
-
-        public Uri Uri { get; }
+        public Uri Uri { get; private set; }
         
-        protected ModelContainer Models { get; }
-
-        public ModelProvider(Uri uri, ModelContainer container)
-        {
-            Models = container; 
-            Uri = uri;
-        }
-
-        private Model Get(string query)
-        {
-            var modelUri = Uri.Model(query);
-
-            try
-            {
-                var model = Models.Find(modelUri);
-                if(model == null)
-                {
-                    model = _modelFactory[query].Invoke();
-                    model.Uri = modelUri;
-                    model.Provider = this;
-                    Models.Add(model);
-                }
-                return model;
-            }
-            catch(KeyNotFoundException)
-            {
-                throw new ArgumentException($"\'{query}\' is not valid");   
-            }
-        }
+        protected ModelContainer Models { get; private set; }
 
         public virtual bool Open() => true;
 
@@ -57,11 +23,45 @@ namespace Kamu.ModelFramework
             Close();
         }
 
+        #endregion
+
+        #region [Model primitives]
+
+        protected abstract Model Create(string query);
+
+        protected abstract void Load(Model model);
+
+        public abstract void Update(Model model);
+
+        public abstract void Save(Model model);
+
+        #endregion
+
+        #region [Helpers]
+        
         public Model Load(string query)
         {
             var model = Get(query);
             Load(model);
             model.OnChanged(ChangingSource.Load);
+            return model;
+        }
+
+        private Model Get(string query)
+        {
+            var modelUri = Uri.Model(query);
+            var model = Models.Find(modelUri);
+            if (model == null)
+            {
+                model = Create(query);
+                if (model == null)
+                {
+                    throw new ArgumentException($"\'{query}\' is not valid");
+                }
+                model.Uri = modelUri;
+                model.Provider = this;
+                Models.Add(model);
+            }
             return model;
         }
 
@@ -88,12 +88,8 @@ namespace Kamu.ModelFramework
 
         public Model GetOrLoad(string query) => Models.Find(Uri.Model(query)) ?? Load(query);
 
-        protected abstract void Load(Model model);
-
-        public abstract void Update(Model model);
-
-        public abstract void Save(Model model);
-
         protected void InvokeChanged(Model model, ChangingSource source) => model.OnChanged(source);
+
+        #endregion
     }   
 }
