@@ -18,11 +18,6 @@ namespace Kamu.ModelFrameworkTests.Provider
                 throw new NotImplementedException();
             }
 
-            public override void Update(Model model)
-            {
-                throw new NotImplementedException();
-            }
-
             protected override void Load(Model model)
             {
                 throw new NotImplementedException();
@@ -39,11 +34,6 @@ namespace Kamu.ModelFrameworkTests.Provider
             }
 
             public override void Save(Model model)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void Update(Model model)
             {
                 throw new NotImplementedException();
             }

@@ -14,19 +14,18 @@ namespace Kamu.ModelFrameworkTests
         public TestContext TestContext { get; set; }   
 
         private Uri Name = new Uri("hello://here/?greeting");
-        private ModelInventory Inventory = new ModelInventory();
+        private ModelInventory Inventory;
 
         [TestInitialize]
         public void Initialize()
         {
             ModelProviderFactory.Register(typeof(EmptyMachine));
-            Assert.IsTrue(Inventory.Open(Name.Provider()));
+            Inventory = new ModelInventory();
         }
 
         [TestCleanup]
         public void CleanUp()
         {
-            Inventory.Close(Name.Provider());
             ModelProviderFactory.Reset();
         }
 
@@ -46,10 +45,10 @@ namespace Kamu.ModelFrameworkTests
         {
             var model = Inventory.Get<HelloModel>(Name);
             model.Greeting = "hi";
-            model.Update();
+            model.Save();
 
             var afterUpdate = Inventory.Get<Model>(Name);
-            afterUpdate.Reload();
+            afterUpdate.Load();
 
             var afterReload = Inventory.Get<Model>(Name);
 
@@ -59,12 +58,10 @@ namespace Kamu.ModelFrameworkTests
         }
 
         [TestMethod]
-        public void ShouldNotBeSameAfterReOpen()
+        public void ShouldNotBeSameAfterDetaching()
         {
             var model = Inventory.Get<HelloModel>(Name);
-            
-            Inventory.Close(Name.Provider());
-            Inventory.Open(Name.Provider());
+            model.Detach();
 
             var after = Inventory.Get<HelloModel>(Name);
 
@@ -72,18 +69,66 @@ namespace Kamu.ModelFrameworkTests
             Assert.AreNotSame(model, after);         
         }
 
-        [TestMethod]
-        public void ShouldClearInventoryAfterCloseProvider()
+       [TestMethod]
+        public void ShouldCloseProviderIfThereAreNotAttachedModels()
         {
-            int counterOffset = Inventory.Count;
+            /// <see>
+            /// model, model.Good => HelloMachine
+            /// model.Empty => EmptyProvider
+            /// </see>
 
             HelloModel model = Inventory.Get<HelloModel>(Name);
-            Assert.IsTrue(counterOffset < Inventory.Count);
+            Assert.AreEqual(2, Inventory.GetProviders().Count());
+
+            model.Empty.Detach();
+            Assert.AreEqual(1, Inventory.GetProviders().Count());
+            model.Good.Detach();
+            Assert.AreEqual(1, Inventory.GetProviders().Count());
+            model.Detach();
+            Assert.AreEqual(0, Inventory.GetProviders().Count());
+        }
+
+        [TestMethod]
+        public void ShouldClearInventoryAfterDetaching()
+        {
+            HelloModel model = Inventory.Get<HelloModel>(Name);
+            Assert.AreEqual(3, Inventory.Count);
             Assert.IsFalse(model.DetachedCallback);
 
-            Inventory.Close(Name.Provider());
+            model.Empty.Detach();
+            Assert.AreEqual(2, Inventory.Count);
 
-            Assert.AreEqual(counterOffset, Inventory.Count);
+            model.Good.Detach();
+            Assert.AreEqual(1, Inventory.Count);
+
+            model.Detach();
+            Assert.AreEqual(0, Inventory.Count);
+            Assert.IsTrue(model.DetachedCallback);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ShouldCloseProviderIfItFailsToGetModelAndIsNotAttachedToAnyModel()
+        {
+            try
+            {
+                Inventory.Get<Model>(Name.Model("None"));
+            }
+            catch
+            {
+                Assert.AreEqual(0, Inventory.GetProviders().Count());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public void ShouldClearInventoryWhenProviderCallsAbort()
+        {
+            HelloModel model = Inventory.Get<HelloModel>(Name);
+            Assert.AreEqual(3, Inventory.Count);
+            model.Good.Abort();
+            Assert.AreEqual(1, Inventory.Count);    // because model.Empty is attached to the different provider.
+            Assert.AreEqual(1, Inventory.GetProviders().Count());
             Assert.IsTrue(model.DetachedCallback);
         }
     }

@@ -8,12 +8,15 @@ namespace Kamu.ModelFrameworkTests
     [TestClass]
     public class ModelProviderFactoryTest
     {
-        private ModelInventory Inventory = new ModelInventory();
+        private ModelInventory Inventory;
+
+        private Uri Name = new Uri("hello://here/?greeting");
 
         [TestInitialize]
         public void Initialize()
         {
             ModelProviderFactory.Register(typeof(EmptyMachine));
+            Inventory = new ModelInventory();
         }
 
         [TestCleanup]
@@ -25,11 +28,9 @@ namespace Kamu.ModelFrameworkTests
         [TestMethod]
         public void ShouldBeAbleToOpenAnyProviderThatHasSchemeAttribute()
         {   
-            Uri Name = new Uri("hello://here/");
+            Assert.IsNotNull(Inventory.Get<Model>(Name));
 
-            Assert.IsTrue(Inventory.Open(Name));
-
-            Assert.AreNotEqual(0, Kamu.ModelFramework.ModelProviderFactory.Schemes.Count());
+            Assert.AreNotEqual(3, Kamu.ModelFramework.ModelProviderFactory.Schemes.Count());
 
             Assert.IsTrue(Kamu.ModelFramework.ModelProviderFactory.Schemes.Contains(Name.Scheme));
         }
@@ -39,25 +40,21 @@ namespace Kamu.ModelFrameworkTests
         public void ShouldNotBeProvidersWhichHaveTheSameSchemeAttribute()
         {
             ModelProviderFactory.Reset();
-            Inventory.Open(new Uri("empty://here/")); 
+            Inventory.Get<Model>(Name);
         }
 
         [TestMethod]
         public void ShouldRegisterNestedPublicProvider()
         {
-            Uri Name = new Uri("nested.public://here/");
-
-            Assert.IsTrue(Inventory.Open(Name));
-            Assert.IsTrue(Kamu.ModelFramework.ModelProviderFactory.Schemes.Contains(Name.Scheme));
+            Inventory.Get<Model>(Name);
+            Assert.IsTrue(Kamu.ModelFramework.ModelProviderFactory.Schemes.Contains("nested.public"));
         }
 
         [TestMethod]
         public void ShouldRegisterNestedPrivateProvider()
         {
-            Uri Name = new Uri("nested.private://here/");
-
-            Assert.IsTrue(Inventory.Open(Name));
-            Assert.IsTrue(Kamu.ModelFramework.ModelProviderFactory.Schemes.Contains(Name.Scheme));
+            Inventory.Get<Model>(Name);
+            Assert.IsTrue(Kamu.ModelFramework.ModelProviderFactory.Schemes.Contains("nested.private"));
         }
 
         [TestMethod]

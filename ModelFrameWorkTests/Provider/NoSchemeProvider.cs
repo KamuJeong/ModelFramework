@@ -10,11 +10,6 @@ namespace Kamu.ModelFrameworkTests
             throw new NotImplementedException();
         }
 
-        public override void Update(Model model)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override Model Create(string query)
         {
             throw new NotImplementedException();

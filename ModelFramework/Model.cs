@@ -6,38 +6,42 @@ namespace Kamu.ModelFramework
     public enum ChangingSource
     {
         Load,
-        Update,
+        Save,
         Provider
     }
 
     public enum DetachingSource
     {
-        Close,
-        Provider
+        Detach,
+        Abort
     }
 
 
     public abstract class Model
     {
-        internal protected ModelProvider Provider { get; internal set; } 
-
         public Uri Uri { get; internal set; }
+
+        internal protected ModelProvider Provider { get; internal set; } 
 
         public bool IsProviderAttached => Provider != null;
 
-        public void Reload()
+        internal bool IsComeFrom(ModelProvider provider) => Provider == provider;
+
+        public void Detach(DetachingSource source = DetachingSource.Detach) 
+        {
+            if (IsProviderAttached)
+            {
+                Provider.Delete(this);
+                Provider = null;
+                OnDetached(source);
+            }
+        }
+
+        public void Load()
         {
             if(IsProviderAttached)
             {
                 Provider.Load(Uri.Model());
-            }
-        }
-
-        public void Update()
-        {
-            if(IsProviderAttached)
-            {
-                Provider.Update(this);
             }
         }
 
@@ -46,7 +50,7 @@ namespace Kamu.ModelFramework
             if(IsProviderAttached)
             {
                 Provider.Save(this);
-            }            
+            }
         }
 
         internal protected virtual void OnDetached(DetachingSource source) {}

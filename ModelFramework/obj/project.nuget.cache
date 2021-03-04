@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "DGSBbsj28gyknW/VOSFBOVVnQE8wfHI5xoUlrtnWcwhl1AdwZRsxwLmym7rtgycsnqDKyL9ZgEYoHw20NgLzcw==",
+  "dgSpecHash": "d0Ttid91Cz0kpbHoXJN9hZcqTDhDXyAK8H4y9vysGdT9L4yTFBQgtP9bz85geGpddORW63ETxeZxWwGLZg+Y1w==",
   "success": true,
-  "projectFilePath": "d:\\Visual_Studio_Code\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
+  "expectedPackageFiles": [
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -53,9 +53,9 @@ namespace Kamu.ModelFrameworkTests
 
         #endregion
 
-        #region [Update]
+        #region [Save]
 
-        public override void Update(Model model) =>  UpdateModel((dynamic)model, ChangingSource.Update);
+        public override void Save(Model model) =>  SaveModel((dynamic)model, ChangingSource.Save);
        
         public static Dictionary<string, string> Responses = new Dictionary<string, string>
         {
@@ -63,7 +63,7 @@ namespace Kamu.ModelFrameworkTests
             ["how are you?"] = "I'm fine"
         };
 
-        private void UpdateModel(HelloModel model, ChangingSource source) 
+        private void SaveModel(HelloModel model, ChangingSource source) 
         {
             try
             {
@@ -76,7 +76,7 @@ namespace Kamu.ModelFrameworkTests
             }
         }
 
-        private void UpdateModel(GoodModel model, ChangingSource source)
+        private void SaveModel(GoodModel model, ChangingSource source)
         {
             var greet = GetOrLoad("greeting") as HelloModel;
 
@@ -100,25 +100,11 @@ namespace Kamu.ModelFrameworkTests
 
         #endregion
 
-        #region [Save]
-
-        public override void Save(Model model)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
         /// <summary>
         /// Model specific function
         /// </summary>
         
         #region [Etc]
-
-        public override void Close()     
-        { 
-            Models.Close(Uri.Scheme("empty"), DetachingSource.Close);
-        }
 
         public void WhoAreYou()
         {

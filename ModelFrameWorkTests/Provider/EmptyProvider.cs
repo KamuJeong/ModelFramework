@@ -40,25 +40,14 @@ namespace Kamu.ModelFrameworkTests
 
         #endregion
 
-        #region [Update]
+        #region [Save]
 
-        public override void Update(Model model) =>  UpdateModel((dynamic)model, ChangingSource.Update);
-        private void UpdateModel(EmptyModel model, ChangingSource source) 
+        public override void Save(Model model) =>  SaveModel((dynamic)model, ChangingSource.Save);
+        private void SaveModel(EmptyModel model, ChangingSource source) 
         {
             var greet = GetOrLoad(Uri.Scheme("hello").Model("greeting")) as HelloModel;
             greet.Greeting = "Anybody here?";
         }
-
-        #endregion
-
-        #region [Save]
-
-        public override void Save(Model model)
-        {
-            throw new NotImplementedException();
-        }
-
-
 
         #endregion
 
@@ -96,15 +85,6 @@ namespace Kamu.ModelFrameworkTests
         protected override void Load(Model model)
         {
             throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region [Update]
-
-        public override void Update(Model model)
-        {          
-            throw new NotImplementedException();             
         }
 
         #endregion

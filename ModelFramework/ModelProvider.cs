@@ -21,11 +21,7 @@ namespace Kamu.ModelFramework
         { 
         }
 
-        protected void Abort()
-        {
-            Models.Close(Uri, DetachingSource.Provider);
-            Close();
-        }
+        public void Abort() => Models.Abort(this);
 
         #endregion
 
@@ -35,8 +31,6 @@ namespace Kamu.ModelFramework
 
         protected abstract void Load(Model model);
 
-        public abstract void Update(Model model);
-
         public abstract void Save(Model model);
 
         #endregion
@@ -45,10 +39,18 @@ namespace Kamu.ModelFramework
         
         public Model Load(string query)
         {
-            var model = Get(query);
-            Load(model);
-            model.OnChanged(ChangingSource.Load);
-            return model;
+            try
+            {
+                var model = Get(query);
+                Load(model);
+                model.OnChanged(ChangingSource.Load);
+                return model;
+            }
+            catch
+            {
+                Models.TryRemove(this);       
+                throw;
+            }
         }
 
         private Model Get(string query)
@@ -69,30 +71,14 @@ namespace Kamu.ModelFramework
             return model;
         }
 
-        public Model GetOrLoad(Uri modelUri)
-        {
-            if(modelUri.Provider() == Uri)  
-                return GetOrLoad(modelUri.Model());
+        internal void Delete(Model model) => Models.Delete(model);
 
-            ModelProvider provider;
-            try
-            {
-                provider = Models.GetProvider(modelUri.Provider());
-            }
-            catch
-            {
-                if(!Models.Open(modelUri.Provider()))
-                {
-                    throw;
-                }
-                provider = Models.GetProvider(modelUri.Provider());
-            }
-            return provider.GetOrLoad(modelUri.Model());
-        }
+        public Model GetOrLoad(Uri modelUri) => Models.GetProvider(modelUri.Provider()).GetOrLoad(modelUri.Model());
 
         public Model GetOrLoad(string query) => Models.Find(Uri.Model(query)) ?? Load(query);
 
         protected void InvokeChanged(Model model, ChangingSource source) => model.OnChanged(source);
+
 
         #endregion
     }   

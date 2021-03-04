@@ -1,0 +1,9 @@
+c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\bin\Debug\netstandard2.0\Kamu.ModelFramework.deps.json
+C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\bin\Debug\netstandard2.0\Kamu.ModelFramework.dll
+C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\bin\Debug\netstandard2.0\Kamu.ModelFramework.pdb
+C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.csprojAssemblyReference.cache
+C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.AssemblyInfoInputs.cache
+C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.AssemblyInfo.cs
+C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.csproj.CoreCompileInputs.cache
+C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.dll
+C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.pdb

@@ -5,5 +5,6 @@ namespace Kamu.ModelFrameworkTests
 {
     class GoodModel : Model
     {
+        public void Abort() => Provider.Abort();
     }    
 }

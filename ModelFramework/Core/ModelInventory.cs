@@ -11,30 +11,38 @@ namespace Kamu.ModelFramework
     {
         private Dictionary<Uri, Model> _modelCollection = new Dictionary<Uri, Model>();
 
-       public int Count => _modelCollection.Count();
+        public int Count => _modelCollection.Count();
  
-        public override void Close(Uri providerUri, DetachingSource source = DetachingSource.Close)
+        internal override void Abort(ModelProvider provider)
         {
-            Clear(providerUri, source);
-            base.Close(providerUri, source);
+            foreach(var model  in _modelCollection
+                                    .Where(p => p.Value.IsComeFrom(provider))
+                                    .Select(p => p.Value).ToArray())
+            {
+                model.Detach(DetachingSource.Abort);
+            }
         }
 
-        private void Clear(Uri providerUri, DetachingSource source)
+        internal override void TryRemove(ModelProvider provider)
         {
-            var items = _modelCollection.Where(kv => kv.Value.Provider.Uri == providerUri).ToArray();
-            foreach (var item in items)
+            if (_modelCollection.All(p => !p.Value.IsComeFrom(provider)))
             {
-                item.Value.Provider = null;
-                item.Value.OnDetached(source);
-                _modelCollection.Remove(item.Key);
+                _providerCollection.Remove(provider.Uri);
+                provider.Close();
             }
-        }        
+        }
 
         public TModel Get<TModel>(Uri modelUri) where TModel : Model
             => ((Find(modelUri) ?? GetProvider(modelUri.Provider()).Load(modelUri.Model())) as TModel) 
                 ?? throw new InvalidCastException();
  
         internal override void Add(Model model)  => _modelCollection.Add(model.Uri, model);
+
+        internal override void Delete(Model model)
+        {
+            _modelCollection.Remove(model.Uri);
+            TryRemove(model.Provider);
+        }
 
         internal override Model Find(Uri modelUri) => _modelCollection.TryGetValue(modelUri, out var model)?  model : null;
     }

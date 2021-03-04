@@ -9,48 +9,40 @@ namespace Kamu.ModelFramework
     /// </summary>
     public abstract class ModelContainer
     {
-        private Dictionary<Uri, ModelProvider> _providerCollection = new Dictionary<Uri, ModelProvider>();
+        protected Dictionary<Uri, ModelProvider> _providerCollection = new Dictionary<Uri, ModelProvider>();
 
         public IEnumerable<Uri> GetProviders() => _providerCollection.Keys;
 
         internal protected ModelProvider GetProvider(Uri providerUri)
         {
-            if(_providerCollection.TryGetValue(providerUri, out ModelProvider provider))
-            {
+            if(string.IsNullOrEmpty(providerUri.Scheme))
+                throw new ArgumentNullException(nameof(providerUri));
+
+            if (_providerCollection.TryGetValue(providerUri, out ModelProvider provider))
                 return provider;
-            }
-            throw new ArgumentException("not opened");
+
+            return Open(providerUri);
         }
 
-        public bool Open(Uri providerUri)
+        private ModelProvider Open(Uri providerUri)
         {
-            if(string.IsNullOrEmpty(providerUri.Scheme))
-                return false;
-
-            if(GetProviders().Any(p => p == providerUri))
-                throw new ArgumentException("alreay opened");
-
             var provider = ModelProviderFactory.Create(providerUri, this);
             if(provider.Open())
             {
                 _providerCollection.Add(providerUri, provider);
-                return true;
+                return provider;
             }
-
-            return false;
+            throw new ArgumentException($"can't open {providerUri}");
         }
 
-        public virtual void Close(Uri providerUri, DetachingSource source)
-        {
-            if(_providerCollection.TryGetValue(providerUri, out ModelProvider provider))
-            {
-                _providerCollection.Remove(providerUri);
-                provider.Close();
-            }
-        }
+        internal abstract void Abort(ModelProvider provider);
+
+        internal abstract void TryRemove(ModelProvider provider);
 
         internal abstract void Add(Model model); 
-        
+
+        internal abstract void Delete(Model model);
+
         internal abstract Model Find(Uri modelUri);
 
     }

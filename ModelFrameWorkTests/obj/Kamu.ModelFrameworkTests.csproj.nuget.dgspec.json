@@ -1,48 +1,46 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Visual_Studio_Code\\ModelFramework\\ModelFrameWorkTests\\Kamu.ModelFrameworkTests.csproj": {}
+    "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFrameWorkTests\\Kamu.ModelFrameworkTests.csproj": {}
   },
   "projects": {
-    "d:\\Visual_Studio_Code\\ModelFramework\\ModelFrameWorkTests\\Kamu.ModelFrameworkTests.csproj": {
+    "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFrameWorkTests\\Kamu.ModelFrameworkTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Visual_Studio_Code\\ModelFramework\\ModelFrameWorkTests\\Kamu.ModelFrameworkTests.csproj",
+        "projectUniqueName": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFrameWorkTests\\Kamu.ModelFrameworkTests.csproj",
         "projectName": "Kamu.ModelFrameworkTests",
-        "projectPath": "d:\\Visual_Studio_Code\\ModelFramework\\ModelFrameWorkTests\\Kamu.ModelFrameworkTests.csproj",
+        "projectPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFrameWorkTests\\Kamu.ModelFrameworkTests.csproj",
         "packagesPath": "C:\\Users\\정경훈\\.nuget\\packages\\",
-        "outputPath": "d:\\Visual_Studio_Code\\ModelFramework\\ModelFrameWorkTests\\obj\\",
+        "outputPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFrameWorkTests\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\정경훈\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\정경훈\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net472",
           "net5"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5",
             "projectReferences": {
-              "d:\\Visual_Studio_Code\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj": {
-                "projectPath": "d:\\Visual_Studio_Code\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj"
+              "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj": {
+                "projectPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj"
               }
             }
           },
           "net472": {
             "targetAlias": "net472",
             "projectReferences": {
-              "d:\\Visual_Studio_Code\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj": {
-                "projectPath": "d:\\Visual_Studio_Code\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj"
+              "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj": {
+                "projectPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj"
               }
             }
           }
@@ -123,38 +121,30 @@
         }
       }
     },
-    "d:\\Visual_Studio_Code\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj": {
+    "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Visual_Studio_Code\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
+        "projectUniqueName": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
         "projectName": "Kamu.ModelFramework",
-        "projectPath": "d:\\Visual_Studio_Code\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
+        "projectPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
         "packagesPath": "C:\\Users\\정경훈\\.nuget\\packages\\",
-        "outputPath": "d:\\Visual_Studio_Code\\ModelFramework\\ModelFramework\\obj\\",
+        "outputPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\obj\\",
         "projectStyle": "PackageReference",
-        "crossTargeting": true,
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\정경훈\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\정경훈\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net472",
-          "net5"
+          "netstandard2.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5",
-            "projectReferences": {}
-          },
-          "net472": {
-            "targetAlias": "net472",
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
             "projectReferences": {}
           }
         },
@@ -165,8 +155,16 @@
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5",
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -177,15 +175,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
-        },
-        "net472": {
-          "targetAlias": "net472",
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
