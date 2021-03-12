@@ -2,6 +2,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Kamu.ModelFramework;
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Kamu.ModelFrameworkTests
 {
@@ -33,8 +35,7 @@ namespace Kamu.ModelFrameworkTests
         #region [Simple model]
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRespondToSaveOrThrowInvalidOpertionExceptionIfNotValidSave()
+        public void CouldRespondToSave()
         {
             var model = Inventory.Get<HelloModel>(Name);
 
@@ -42,15 +43,95 @@ namespace Kamu.ModelFrameworkTests
             {
                 model.Greeting = greet;
                 TestContext.Write(model.Greeting + " => ");
-                model.Save();
-                TestContext.WriteLine(model.Greeting);
-                Assert.AreEqual(HelloMachine.Responses[greet.ToLower()], model.Greeting);
+                if(model.Save())
+                {
+                    TestContext.WriteLine(model.Greeting);
+                    Assert.AreEqual(HelloMachine.Responses[greet.ToLower()], model.Greeting);
+                }
+                else
+                {
+                    TestContext.WriteLine("pardon?");
+                }
             };
 
             test("hi");
             test("How are you?");
             test("Nice to meet you");
         }
+
+        [TestMethod]
+        public async Task CouldRespondToSaveAsync()
+        {
+            var model = await Inventory.GetAsync<HelloModel>(Name);
+
+            Func<string, Task> test = async (greet) => 
+            {
+                model.Greeting = greet;
+                TestContext.Write(model.Greeting + " [" + Thread.CurrentThread.ManagedThreadId + "] => ");
+                if(await model.SaveAsync())
+                {
+                    TestContext.WriteLine(model.Greeting + " [" + Thread.CurrentThread.ManagedThreadId + "]");
+                    Assert.AreEqual(HelloMachine.Responses[greet.ToLower()], model.Greeting);
+                }
+                else
+                {
+                    TestContext.WriteLine("pardon?" + " [" + Thread.CurrentThread.ManagedThreadId + "]");
+                }
+            };
+
+            await test("hi");
+            await test("How are you?");
+            await test("Nice to meet you");
+        }
+
+        [TestMethod]
+        public async Task ShouldExcuteAsyncMethodsSynchronously()
+        {
+            int count = 30;
+            long expected = 5 + 2;
+            expected = Enumerable.Range(0, count).Aggregate(expected, (acc, i) => (i&1)==0? acc + 2 : acc * 3);
+
+            var model = await Inventory.GetAsync<CalculatorModel>(new Uri("calculator://here/?note"));
+
+            await Task.WhenAll(Enumerable.Range(0, count).Select(i => (i&1)==0? model.LoadAsync().AsTask() : model.SaveAsync().AsTask()));
+
+            Assert.AreEqual(expected, model.Result);
+
+            long value = 7;
+            await Task.WhenAll(Enumerable.Range(0, count).Select(i => (i&1) == 0 ? Task.Run(() => value += 2) : Task.Run(() => value *= 3)));
+
+            TestContext.WriteLine($"Asynchronous Execution Test : Expected : {expected}, Actual : {value}");
+        }
+
+        [TestMethod]
+        public void ShouldCatchEventOnlyOnceWithEachHandler()
+        {
+            var model = Inventory.Get<CalculatorModel>(new Uri("calculator://here/?note"));
+          
+            Assert.AreEqual(0, model.ChangeCount);
+
+            model.Changed += (s, e) =>
+            {
+                model.ChangeCount++;
+            };
+
+            model.Load();
+            model.Load();
+            
+            Assert.AreEqual(1, model.ChangeCount);
+
+            model.Changed += (s, e) =>
+            {
+                model.ChangeCount++;
+            };
+
+            model.Load();
+            model.Load();     
+            model.Load();
+
+             Assert.AreEqual(2, model.ChangeCount);       
+        }
+
 
         [TestMethod]
         public void ShouldRespondToModelSpecificAction()
@@ -100,7 +181,7 @@ namespace Kamu.ModelFrameworkTests
             Assert.AreEqual(1, Inventory.Count);
             empty.Save();
             Assert.IsTrue(Inventory.Count > 1);
-            Assert.AreEqual(2, Inventory.GetProviders().Count());
+            Assert.AreEqual(2, Inventory.Providers.Count());
         }
 
         [TestMethod]

@@ -16,86 +16,89 @@ namespace Kamu.ModelFrameworkTests
         /// 3. Update models
         /// 4. Save models
         /// </summary>
-         
+
         #region [Create]
 
         protected override Model Create(string query)
         {
-            switch(query)
+            switch (query)
             {
-            case "good":        
-                return new GoodModel();
-            case "greeting":    
-                return new HelloModel(good:(GoodModel)GetOrLoad("good"), empty:(EmptyModel)GetOrLoad(Uri.Scheme("empty").Model("empty")));
+                case "good":
+                    return new GoodModel();
+                case "greeting":
+                    return new HelloModel(good: Models.Get<GoodModel>(Uri.Model("good")), empty: Models.Get<EmptyModel>(Uri.Scheme("empty").Model("empty")));
             }
             return null;
         }
+
+        protected override bool Opening() => true;
+
+        protected override void Closing() { }
 
         #endregion
 
         #region [Load]
 
-        protected override void Load(Model model) => LoadModel((dynamic)model);
+        protected override bool Loading(Model model) => LoadModel((dynamic)model);
 
-        private void LoadModel(EmptyModel model) 
-        {
+        private bool LoadModel(EmptyModel model) => true;
 
-        }
+        private bool LoadModel(GoodModel model) => true;
 
-        private void LoadModel(GoodModel model)
-        {
-        }
-
-        private void LoadModel(HelloModel model)
+        private bool LoadModel(HelloModel model)
         {
             model.Greeting = "Hello";
+            return true;
         }
 
         #endregion
 
         #region [Save]
 
-        public override void Save(Model model) =>  SaveModel((dynamic)model, ChangingSource.Save);
-       
+        protected override bool Saving(Model model) => SaveModel((dynamic)model, ChangingSource.Save);
+
         public static Dictionary<string, string> Responses = new Dictionary<string, string>
         {
             ["hi"] = "Hello",
             ["how are you?"] = "I'm fine"
         };
 
-        private void SaveModel(HelloModel model, ChangingSource source) 
+        private bool SaveModel(HelloModel model, ChangingSource source)
         {
             try
             {
                 model.Greeting = Responses[model.Greeting.ToLower()];
                 InvokeChanged(model, source);
+                return true;
             }
-            catch(KeyNotFoundException)
+            catch (KeyNotFoundException)
             {
-                throw new InvalidOperationException($"\'Can't respond to {model.Greeting}\'");
+                return false;
             }
         }
 
-        private void SaveModel(GoodModel model, ChangingSource source)
+        private bool SaveModel(GoodModel model, ChangingSource source)
         {
-            var greet = GetOrLoad("greeting") as HelloModel;
+            var greet = Models.Get<HelloModel>(Uri.Model("greeting"));
 
-            switch(System.DateTime.Now.TimeOfDay.Hours)
+            switch (System.DateTime.Now.TimeOfDay.Hours)
             {
-            case int h when h < 5:
-                greet.Greeting = "Good night!";
-                break;
-            case int h when h < 12:
-                greet.Greeting = "Good morning!";
-                break;
-            case int h when h < 17:
-                greet.Greeting = "Good afternoon!";
-                break;
-            default:
-                greet.Greeting = "Good evening!";
-                break;
+                case int h when h < 5:
+                    greet.Greeting = "Good night!";
+                    break;
+                case int h when h < 12:
+                    greet.Greeting = "Good morning!";
+                    break;
+                case int h when h < 17:
+                    greet.Greeting = "Good afternoon!";
+                    break;
+                default:
+                    greet.Greeting = "Good evening!";
+                    break;
             }
             InvokeChanged(greet, source);
+
+            return true;
         }
 
         #endregion
@@ -103,12 +106,12 @@ namespace Kamu.ModelFrameworkTests
         /// <summary>
         /// Model specific function
         /// </summary>
-        
+
         #region [Etc]
 
         public void WhoAreYou()
         {
-            var model = GetOrLoad("greeting") as HelloModel;
+            var model = Models.Get<HelloModel>(Uri.Model("greeting"));
             model.Greeting = "Hi! I'm a \'HelloMachine\'";
 
             InvokeChanged(model, ChangingSource.Provider);
@@ -117,4 +120,3 @@ namespace Kamu.ModelFrameworkTests
         #endregion
     }
 }
- 

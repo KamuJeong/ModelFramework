@@ -78,14 +78,14 @@ namespace Kamu.ModelFrameworkTests
             /// </see>
 
             HelloModel model = Inventory.Get<HelloModel>(Name);
-            Assert.AreEqual(2, Inventory.GetProviders().Count());
+            Assert.AreEqual(2, Inventory.Providers.Count());
 
             model.Empty.Detach();
-            Assert.AreEqual(1, Inventory.GetProviders().Count());
+            Assert.AreEqual(1, Inventory.Providers.Count());
             model.Good.Detach();
-            Assert.AreEqual(1, Inventory.GetProviders().Count());
+            Assert.AreEqual(1, Inventory.Providers.Count());
             model.Detach();
-            Assert.AreEqual(0, Inventory.GetProviders().Count());
+            Assert.AreEqual(0, Inventory.Providers.Count());
         }
 
         [TestMethod]
@@ -116,7 +116,7 @@ namespace Kamu.ModelFrameworkTests
             }
             catch
             {
-                Assert.AreEqual(0, Inventory.GetProviders().Count());
+                Assert.AreEqual(0, Inventory.Providers.Count());
                 throw;
             }
         }
@@ -128,7 +128,7 @@ namespace Kamu.ModelFrameworkTests
             Assert.AreEqual(3, Inventory.Count);
             model.Good.Abort();
             Assert.AreEqual(1, Inventory.Count);    // because model.Empty is attached to the different provider.
-            Assert.AreEqual(1, Inventory.GetProviders().Count());
+            Assert.AreEqual(1, Inventory.Providers.Count());
             Assert.IsTrue(model.DetachedCallback);
         }
     }

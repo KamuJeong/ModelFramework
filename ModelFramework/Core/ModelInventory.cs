@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Kamu.ModelFramework
 {
@@ -11,39 +12,113 @@ namespace Kamu.ModelFramework
     {
         private Dictionary<Uri, Model> _modelCollection = new Dictionary<Uri, Model>();
 
-        public int Count => _modelCollection.Count();
- 
-        internal override void Abort(ModelProvider provider)
+        public int Count
         {
-            foreach(var model  in _modelCollection
-                                    .Where(p => p.Value.IsComeFrom(provider))
-                                    .Select(p => p.Value).ToArray())
+            get
             {
-                model.Detach(DetachingSource.Abort);
+                lock (_locker)
+                {
+                    return _modelCollection.Count();
+                }
             }
         }
 
-        internal override void TryRemove(ModelProvider provider)
+        private Model Find(Uri modelUri) => _modelCollection.TryGetValue(modelUri, out var model) ? model : null;
+
+        private Model Create(Uri modelUri)
         {
-            if (_modelCollection.All(p => !p.Value.IsComeFrom(provider)))
+            var provider = GetProvider(modelUri.Provider());
+            var model = provider.Create(modelUri.Model());
+            if (model != null)
             {
-                _providerCollection.Remove(provider.Uri);
-                provider.Close();
+                model.Uri = modelUri;
+                model.Provider = provider;
+                _modelCollection.Add(modelUri, model);
+            }
+            else
+            {
+                CleanProvider(provider);
+                return null;
+            }
+            return model;
+        }
+
+        private Model GetModelImpl(Uri modelUri)
+        {
+            lock (_locker)
+            {
+                return Find(modelUri) ?? Create(modelUri) ?? throw new ArgumentException($"{modelUri}");
             }
         }
 
         public TModel Get<TModel>(Uri modelUri) where TModel : Model
-            => ((Find(modelUri) ?? GetProvider(modelUri.Provider()).Load(modelUri.Model())) as TModel) 
-                ?? throw new InvalidCastException();
- 
-        internal override void Add(Model model)  => _modelCollection.Add(model.Uri, model);
-
-        internal override void Delete(Model model)
         {
-            _modelCollection.Remove(model.Uri);
-            TryRemove(model.Provider);
+            var model = GetModelImpl(modelUri);
+
+            if (!model.IsInitialized)
+            {
+                if (!model.Load())
+                {
+                    model.Detach();
+                    return null;
+                }
+            }
+
+            return model as TModel ?? throw new InvalidCastException();
         }
 
-        internal override Model Find(Uri modelUri) => _modelCollection.TryGetValue(modelUri, out var model)?  model : null;
+
+        public async ValueTask<TModel> GetAsync<TModel>(Uri modelUri) where TModel : Model
+        {
+            var model = GetModelImpl(modelUri);
+
+            if (!model.IsInitialized)
+            {
+                if (!await model.LoadAsync())
+                {
+                    model.Detach();
+                    return null;
+                }
+            }
+
+            return model as TModel ?? throw new InvalidCastException();
+        }
+
+
+        public void Delete(Model model)
+        {
+            lock (_locker)
+            {
+                _modelCollection.Remove(model.Uri);
+                CleanProvider(model.Provider);
+            }
+        }
+
+        private void CleanProvider(ModelProvider provider)
+        {
+            if (!provider.IsClosed)
+            {
+                if (_modelCollection.All(p => !p.Value.IsComeFrom(provider)))
+                {
+                    Delete(provider);
+                }
+            }
+        }
+
+        internal void Abort(ModelProvider provider)
+        {
+            if (!provider.IsClosed)
+            {
+                lock (_locker)
+                {
+                    foreach (var model in _modelCollection
+                                            .Where(p => p.Value.IsComeFrom(provider))
+                                            .Select(p => p.Value).ToArray())
+                    {
+                        model.Detach(DetachingSource.Abort);
+                    }
+                }
+            }
+        }
     }
 }

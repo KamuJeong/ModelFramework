@@ -15,7 +15,7 @@ namespace Kamu.ModelFramework
         {
             if (!type.IsSubclassOf(typeof(ModelProvider)))
                 throw new ArgumentNullException($"{type.Name} is not a subclass of ModelProvider");
- 
+
             var schemeAttribute = type.GetCustomAttribute<SchemeAttribute>(false);
 
             if (schemeAttribute == null)

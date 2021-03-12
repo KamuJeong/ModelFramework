@@ -16,37 +16,43 @@ namespace Kamu.ModelFrameworkTests
         /// 3. Update models
         /// 4. Save models
         /// </summary>
- 
+
         #region [Create]
 
         protected override Model Create(string query)
         {
-            switch(query)
+            switch (query)
             {
-            case "empty":   return new EmptyModel();
+                case "empty": return new EmptyModel();
             }
             return null;
         }
+
+        protected override bool Opening() => true;
+
+        protected override void Closing() { }
 
         #endregion
 
         #region [Load]
 
-        protected override void Load(Model model) => LoadModel((dynamic)model);
+        protected override bool Loading(Model model) => LoadModel((dynamic)model);
 
-        private void LoadModel(EmptyModel model) 
-        {
-        }
+        private bool LoadModel(EmptyModel model) => true;
 
         #endregion
 
         #region [Save]
 
-        public override void Save(Model model) =>  SaveModel((dynamic)model, ChangingSource.Save);
-        private void SaveModel(EmptyModel model, ChangingSource source) 
+        protected override bool Saving(Model model) => SaveModel((dynamic)model);
+
+        private bool SaveModel(EmptyModel model)
         {
-            var greet = GetOrLoad(Uri.Scheme("hello").Model("greeting")) as HelloModel;
+            var greet = Models.Get<HelloModel>(Uri.Scheme("hello").Model("greeting"));
             greet.Greeting = "Anybody here?";
+
+            InvokeChanged(greet, ChangingSource.Save);
+            return true;
         }
 
         #endregion
@@ -70,7 +76,7 @@ namespace Kamu.ModelFrameworkTests
         /// 3. Update models
         /// 4. Save models
         /// </summary>
- 
+
         #region [Create]
 
         protected override Model Create(string query)
@@ -78,11 +84,15 @@ namespace Kamu.ModelFrameworkTests
             throw new NotImplementedException();
         }
 
+        protected override bool Opening() => true;
+
+        protected override void Closing() { }
+
         #endregion
 
         #region [Load]
 
-        protected override void Load(Model model)
+        protected override bool Loading(Model model)
         {
             throw new NotImplementedException();
         }
@@ -91,7 +101,7 @@ namespace Kamu.ModelFrameworkTests
 
         #region [Save]
 
-        public override void Save(Model model)
+        protected override bool Saving(Model model)
         {
             throw new NotImplementedException();
         }
@@ -107,5 +117,5 @@ namespace Kamu.ModelFrameworkTests
         #region [Etc]
 
         #endregion
-    }    
+    }
 }

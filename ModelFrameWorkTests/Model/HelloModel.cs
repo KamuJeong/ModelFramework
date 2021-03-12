@@ -14,6 +14,18 @@ namespace Kamu.ModelFrameworkTests
         {
             Good = good;
             Empty = empty;
+
+            this.Changed += ModelChanged;
+            this.Detached += (s, e) => DetachedCallback = true; 
+        }
+
+        private void ModelChanged(object sender, EventArgs e)
+        {
+            if(e is ChangingSourceEventArgs args)
+            {
+                ChangingEvents.Add(args.ChangingSource);
+                args.LeaveAlive = true;
+            }
         }
 
         public string Greeting { get; set; }
@@ -23,16 +35,6 @@ namespace Kamu.ModelFrameworkTests
         public int ChangedCount => ChangingEvents.Count;
 
         public bool DetachedCallback { get; private set; }
-
-        protected override void OnChanged(ChangingSource source)
-        {
-            ChangingEvents.Add(source);
-        }
-
-        protected override void OnDetached(DetachingSource source)
-        {
-            DetachedCallback = true;
-        }
 
         public void WhoAreYou() => (Provider as HelloMachine)?.WhoAreYou();
     }

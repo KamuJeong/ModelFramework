@@ -13,12 +13,16 @@ namespace Kamu.ModelFrameworkTests.Provider
                 throw new NotImplementedException();
             }
 
-            public override void Save(Model model)
+            protected override bool Opening() => true;
+
+            protected override void Closing() { }
+
+            protected override bool Saving(Model model)
             {
                 throw new NotImplementedException();
             }
 
-            protected override void Load(Model model)
+            protected override bool Loading(Model model)
             {
                 throw new NotImplementedException();
             }
@@ -33,12 +37,16 @@ namespace Kamu.ModelFrameworkTests.Provider
                 throw new NotImplementedException();
             }
 
-            public override void Save(Model model)
+            protected override bool Opening() => true;
+
+            protected override void Closing() { }
+
+            protected override bool Saving(Model model)
             {
                 throw new NotImplementedException();
             }
 
-            protected override void Load(Model model)
+            protected override bool Loading(Model model)
             {
                 throw new NotImplementedException();
             }
