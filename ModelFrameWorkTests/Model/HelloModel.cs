@@ -24,7 +24,6 @@ namespace Kamu.ModelFrameworkTests
             if(e is ChangingSourceEventArgs args)
             {
                 ChangingEvents.Add(args.ChangingSource);
-                args.LeaveAlive = true;
             }
         }
 

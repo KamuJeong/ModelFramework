@@ -7,3 +7,12 @@ C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramewo
 C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.csproj.CoreCompileInputs.cache
 C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.dll
 C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.pdb
+d:\Visual_Studio_Code\ModelFramework\ModelFramework\bin\Debug\netstandard2.0\Kamu.ModelFramework.deps.json
+D:\Visual_Studio_Code\ModelFramework\ModelFramework\bin\Debug\netstandard2.0\Kamu.ModelFramework.dll
+D:\Visual_Studio_Code\ModelFramework\ModelFramework\bin\Debug\netstandard2.0\Kamu.ModelFramework.pdb
+D:\Visual_Studio_Code\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.csprojAssemblyReference.cache
+D:\Visual_Studio_Code\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.AssemblyInfoInputs.cache
+D:\Visual_Studio_Code\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.AssemblyInfo.cs
+D:\Visual_Studio_Code\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.csproj.CoreCompileInputs.cache
+D:\Visual_Studio_Code\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.dll
+D:\Visual_Studio_Code\ModelFramework\ModelFramework\obj\Debug\netstandard2.0\Kamu.ModelFramework.pdb

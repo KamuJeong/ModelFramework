@@ -104,36 +104,6 @@ namespace Kamu.ModelFrameworkTests
         }
 
         [TestMethod]
-        public void ShouldCatchEventOnlyOnceWithEachHandler()
-        {
-            var model = Inventory.Get<CalculatorModel>(new Uri("calculator://here/?note"));
-          
-            Assert.AreEqual(0, model.ChangeCount);
-
-            model.Changed += (s, e) =>
-            {
-                model.ChangeCount++;
-            };
-
-            model.Load();
-            model.Load();
-            
-            Assert.AreEqual(1, model.ChangeCount);
-
-            model.Changed += (s, e) =>
-            {
-                model.ChangeCount++;
-            };
-
-            model.Load();
-            model.Load();     
-            model.Load();
-
-             Assert.AreEqual(2, model.ChangeCount);       
-        }
-
-
-        [TestMethod]
         public void ShouldRespondToModelSpecificAction()
         {
             var model = Inventory.Get<HelloModel>(Name);

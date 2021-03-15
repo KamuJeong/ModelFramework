@@ -40,3 +40,5 @@ c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFrameWo
 c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFrameWorkTests\obj\Debug\net472\Kamu.ModelFrameworkTests.pdb
 C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFrameWorkTests\bin\Debug\net472\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFrameWorkTests\bin\Debug\net472\System.Threading.Tasks.Extensions.dll
+D:\Visual_Studio_Code\ModelFramework\ModelFrameWorkTests\bin\Debug\net472\System.Runtime.CompilerServices.Unsafe.dll
+D:\Visual_Studio_Code\ModelFramework\ModelFrameWorkTests\bin\Debug\net472\System.Threading.Tasks.Extensions.dll

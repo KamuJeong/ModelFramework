@@ -99,7 +99,9 @@ namespace Kamu.ModelFramework
         {
             lock (list)
             {
-                list.Remove((handler, SynchronizationContext.Current));
+                int index = list.FindIndex(l => l.Item1 == handler);
+                if(index >= 0)
+                    list.RemoveAt(index);
             }
         }
 
@@ -119,28 +121,39 @@ namespace Kamu.ModelFramework
         {
             IsLoaded = true;
 
-            var list = _changedEventCollection;
-            var eventArgs = new ChangingSourceEventArgs(source);
+            (EventHandler<EventArgs>, SynchronizationContext)[] arr = null; 
 
             lock (_changedEventCollection)
             {
-                _changedEventCollection = new List<(EventHandler<EventArgs>, SynchronizationContext)>();
-
-                foreach ((var handler, var context) in list)
+                if(_changedEventCollection.Count > 0)
                 {
-                    eventArgs.LeaveAlive = false;
+                    arr = _changedEventCollection.ToArray();
+                }
+            }
 
-                    if (context != null) context.Post(_ => handler(this, eventArgs), null);
-                    else handler(this, eventArgs);
-
-                    if (eventArgs.LeaveAlive) _changedEventCollection.Add((handler, context));
+            if(arr != null)
+            {
+                foreach ((var handler, var context) in arr)
+                {
+                    if (context != null) context.Post(_ => handler(this, new ChangingSourceEventArgs(source)), null);
+                    else handler(this, new ChangingSourceEventArgs(source));
                 }
             }
         }
 
         internal void OnDetached(DetachingSource source)
         {
+            (EventHandler<EventArgs>, SynchronizationContext)[] arr = null; 
+
             lock (_detachedEventCollection)
+            {
+                if(_detachedEventCollection.Count > 0)
+                {
+                    arr = _detachedEventCollection.ToArray();
+                }
+            }
+
+            if(arr != null)                    
             {
                 foreach ((var handler, var context) in _detachedEventCollection)
                 {

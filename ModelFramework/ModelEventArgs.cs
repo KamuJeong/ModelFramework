@@ -2,13 +2,7 @@ using System;
 
 namespace Kamu.ModelFramework
 {
-    public class OneShotEventArgs : EventArgs
-    {
-        public bool LeaveAlive { get; set; }
-    }
-
-
-    public class ChangingSourceEventArgs : OneShotEventArgs
+    public class ChangingSourceEventArgs : EventArgs
     {
         public ChangingSource ChangingSource { get; }
 
