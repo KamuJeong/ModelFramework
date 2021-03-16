@@ -9,9 +9,5 @@ namespace Kamu.ModelFrameworkTests
 
         public int ChangeCount { get; set; }
 
-        public override void CopyFrom(Model model)
-        {
-            var good = (CalculatorModel)model;
-        }
     }
 }

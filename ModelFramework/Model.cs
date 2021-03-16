@@ -2,6 +2,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Linq;
 
 namespace Kamu.ModelFramework
 {
@@ -32,7 +34,16 @@ namespace Kamu.ModelFramework
 
         internal bool IsComeFrom(ModelProvider provider) => Provider == provider;
 
-        public abstract void CopyFrom(Model model);
+        public virtual void CopyFrom(Model model)
+        {
+            if(!GetType().IsAssignableFrom(model.GetType()))
+                throw new InvalidCastException();
+
+            foreach(var f in GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+            {
+                f.SetValue(this, f.GetValue(model));
+            }
+        }
 
         public bool Load()
         {

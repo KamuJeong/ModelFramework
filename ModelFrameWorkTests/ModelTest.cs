@@ -33,6 +33,20 @@ namespace Kamu.ModelFrameworkTests
         #endregion
 
         #region [Simple model]
+        [TestMethod]
+        public void CouldCopyFromOtherModel()
+        {
+            var model = Inventory.Get<HelloModel>(Name);
+            model.Detach();
+            var modelNew = Inventory.Get<HelloModel>(Name);
+
+            model.Greeting = "Detached Hello Model";
+            Assert.AreNotEqual(model.Greeting, modelNew.Greeting);
+
+            model.CopyFrom(modelNew);
+            Assert.AreEqual(model.Greeting, modelNew.Greeting);
+            Assert.IsFalse(model.DetachedCallback);
+        }
 
         [TestMethod]
         public void CouldRespondToSave()

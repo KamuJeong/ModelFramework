@@ -88,7 +88,6 @@ d:\Visual_Studio_Code\ModelFramework\ModelFrameWorkTests\bin\Debug\net5\zh-Hant\
 d:\Visual_Studio_Code\ModelFramework\ModelFrameWorkTests\bin\Debug\net5\zh-Hant\Microsoft.VisualStudio.TestPlatform.Common.resources.dll
 d:\Visual_Studio_Code\ModelFramework\ModelFrameWorkTests\bin\Debug\net5\Kamu.ModelFramework.dll
 d:\Visual_Studio_Code\ModelFramework\ModelFrameWorkTests\bin\Debug\net5\Kamu.ModelFramework.pdb
-d:\Visual_Studio_Code\ModelFramework\ModelFrameWorkTests\obj\Debug\net5\Kamu.ModelFrameworkTests.csprojAssemblyReference.cache
 d:\Visual_Studio_Code\ModelFramework\ModelFrameWorkTests\obj\Debug\net5\Kamu.ModelFrameworkTests.GeneratedMSBuildEditorConfig.editorconfig
 d:\Visual_Studio_Code\ModelFramework\ModelFrameWorkTests\obj\Debug\net5\Kamu.ModelFrameworkTests.AssemblyInfoInputs.cache
 d:\Visual_Studio_Code\ModelFramework\ModelFrameWorkTests\obj\Debug\net5\Kamu.ModelFrameworkTests.AssemblyInfo.cs
@@ -198,3 +197,4 @@ c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFrameWo
 c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFrameWorkTests\obj\Debug\net5\ref\Kamu.ModelFrameworkTests.dll
 c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFrameWorkTests\obj\Debug\net5\Kamu.ModelFrameworkTests.pdb
 c:\Users\정경훈\Documents\Visual_Studio_Code\Kamu\ModelFramework\ModelFrameWorkTests\obj\Debug\net5\Kamu.ModelFrameworkTests.genruntimeconfig.cache
+d:\Visual_Studio_Code\ModelFramework\ModelFrameWorkTests\obj\Debug\net5\Kamu.ModelFrameworkTests.csprojAssemblyReference.cache

@@ -7,9 +7,5 @@ namespace Kamu.ModelFrameworkTests
     {
         public void Abort() => Provider.Abort();
 
-        public override void CopyFrom(Model model)
-        {
-            var good = (GoodModel)model;
-        }
     }    
 }

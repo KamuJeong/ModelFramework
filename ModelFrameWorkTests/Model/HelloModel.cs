@@ -33,12 +33,6 @@ namespace Kamu.ModelFrameworkTests
 
         public string Greeting { get; set; }
 
-        public override void CopyFrom(Model model)
-        {
-            var hello = (HelloModel)model;
-            Greeting = hello.Greeting;
-        }
-
         public List<ChangingSource> ChangingEvents { get; } = new List<ChangingSource>();
 
         public int ChangedCount => ChangingEvents.Count;
