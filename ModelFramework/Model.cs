@@ -32,6 +32,8 @@ namespace Kamu.ModelFramework
 
         internal bool IsComeFrom(ModelProvider provider) => Provider == provider;
 
+        public abstract void CopyFrom(Model model);
+
         public bool Load()
         {
             if (IsProviderAttached)
@@ -155,12 +157,11 @@ namespace Kamu.ModelFramework
 
             if(arr != null)                    
             {
-                foreach ((var handler, var context) in _detachedEventCollection)
+                foreach ((var handler, var context) in arr)
                 {
                     if (context != null) context.Post(_ => handler(this, new DetachingSourceEventArgs(source)), null);
                     else handler(this, new DetachingSourceEventArgs(source));
                 }
-                _detachedEventCollection.Clear();
             }
         }
     }

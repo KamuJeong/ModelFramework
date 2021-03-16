@@ -5,7 +5,7 @@ using Kamu.ModelFramework;
 namespace Kamu.ModelFrameworkTests
 {
     [Scheme("calculator")]
-    public class CalculatorProvider : ModelProvider
+    public class CalculatorProvider : ModelProviderWithExclusiveScheduler
     {
         private long _result;
         public long Result => _result;

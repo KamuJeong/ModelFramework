@@ -10,6 +10,8 @@ namespace Kamu.ModelFrameworkTests
 
         public GoodModel Good { get; }
 
+
+
         public HelloModel(GoodModel good, EmptyModel empty)
         {
             Good = good;
@@ -18,6 +20,8 @@ namespace Kamu.ModelFrameworkTests
             this.Changed += ModelChanged;
             this.Detached += (s, e) => DetachedCallback = true; 
         }
+
+
 
         private void ModelChanged(object sender, EventArgs e)
         {
@@ -28,6 +32,12 @@ namespace Kamu.ModelFrameworkTests
         }
 
         public string Greeting { get; set; }
+
+        public override void CopyFrom(Model model)
+        {
+            var hello = (HelloModel)model;
+            Greeting = hello.Greeting;
+        }
 
         public List<ChangingSource> ChangingEvents { get; } = new List<ChangingSource>();
 

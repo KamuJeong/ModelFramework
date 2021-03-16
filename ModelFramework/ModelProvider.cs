@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace Kamu.ModelFramework
 {
     public abstract class ModelProvider
@@ -14,29 +13,30 @@ namespace Kamu.ModelFramework
 
         protected ModelInventory Models { get; private set; }
 
-        public bool IsOpened { get; private set; }
+        public bool IsOpened { get; protected set; }
 
         public bool IsClosed { get; private set; }
 
-        private ConcurrentExclusiveSchedulerPair _schedulerPair = new ConcurrentExclusiveSchedulerPair();
+        protected virtual ValueTask InvokeAsync(Action action, TaskScheduler scheduler = null)
+        {
+            return new ValueTask(Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.DenyChildAttach,
+                                                                scheduler ?? TaskScheduler.Current));
+        }
+
+        protected virtual ValueTask<T> InvokeAsync<T>(Func<T> function, TaskScheduler scheduler = null)
+        {
+            return new ValueTask<T>(Task.Factory.StartNew(function, CancellationToken.None, TaskCreationOptions.DenyChildAttach,
+                                                                scheduler ?? TaskScheduler.Current));
+        }
+
 
         protected ModelProvider()
         {
         }
 
-        protected ValueTask InvokeAsync(Action action, bool exclusive = true)
-        {
-            return new ValueTask(Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.DenyChildAttach,
-                                                                exclusive ? _schedulerPair.ExclusiveScheduler : _schedulerPair.ConcurrentScheduler));
-        }
+        protected bool Open() => IsOpened = Opening();
 
-        protected ValueTask<T> InvokeAsync<T>(Func<T> function, bool exclusive = true)
-        {
-            return new ValueTask<T>(Task.Factory.StartNew(function, CancellationToken.None, TaskCreationOptions.DenyChildAttach,
-                                                                exclusive ? _schedulerPair.ExclusiveScheduler : _schedulerPair.ConcurrentScheduler));
-        }
-
-        private async ValueTask<bool> OpenAync() => IsOpened = await InvokeAsync(Opening);
+        protected async virtual ValueTask<bool> OpenAync() => IsOpened = await InvokeAsync(Opening);
 
         protected abstract bool Opening();
 
@@ -47,7 +47,6 @@ namespace Kamu.ModelFramework
                 Closing();
                 IsOpened = false;
                 IsClosed = true;
-                _schedulerPair.Complete();
             }
         }
 
@@ -67,7 +66,7 @@ namespace Kamu.ModelFramework
         {
             if (IsClosed) return false;
 
-            if (!IsOpened && !Opening())
+            if (!IsOpened && !Open())
             {
                 return false;
             }
@@ -81,7 +80,7 @@ namespace Kamu.ModelFramework
             return false;
         }
 
-        public async ValueTask<bool> LoadAsync(Model model)
+        public async virtual ValueTask<bool> LoadAsync(Model model)
         {
             if (IsClosed) return false;
 
@@ -90,8 +89,10 @@ namespace Kamu.ModelFramework
                 return false;
             }
 
-            if (await InvokeAsync(() => Loading(model)))
+            var temp = Create(model.Uri.Model());
+            if (await InvokeAsync(() => Loading(temp)))
             {
+                model.CopyFrom(temp);
                 InvokeChanged(model, ChangingSource.Load);
                 return true;
             }
@@ -108,11 +109,19 @@ namespace Kamu.ModelFramework
             return Saving(model);
         }
 
-        public ValueTask<bool> SaveAsync(Model model)
+        public async virtual ValueTask<bool> SaveAsync(Model model)
         {
-            if (IsClosed || !model.IsLoaded) return new ValueTask<bool>(false);
+            if (IsClosed || !model.IsLoaded) return false;
 
-            return InvokeAsync(() => Saving(model));
+            var temp = Create(model.Uri.Model());
+            temp.CopyFrom(model);
+
+            if(await InvokeAsync(() => Saving(temp)))
+            {
+                model.CopyFrom(temp);
+                return true;
+            }
+            return false;
         }
 
         protected abstract bool Saving(Model model);

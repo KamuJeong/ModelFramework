@@ -273,24 +273,22 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Visual_Studio_Code\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
+      "projectUniqueName": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
       "projectName": "Kamu.ModelFramework",
-      "projectPath": "d:\\Visual_Studio_Code\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
+      "projectPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\Kamu.ModelFramework.csproj",
       "packagesPath": "C:\\Users\\정경훈\\.nuget\\packages\\",
-      "outputPath": "d:\\Visual_Studio_Code\\ModelFramework\\ModelFramework\\obj\\",
+      "outputPath": "c:\\Users\\정경훈\\Documents\\Visual_Studio_Code\\Kamu\\ModelFramework\\ModelFramework\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\정경훈\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\정경훈\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

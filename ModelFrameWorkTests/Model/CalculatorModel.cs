@@ -8,5 +8,10 @@ namespace Kamu.ModelFrameworkTests
         public long Result => (Provider as CalculatorProvider).Result;
 
         public int ChangeCount { get; set; }
+
+        public override void CopyFrom(Model model)
+        {
+            var good = (CalculatorModel)model;
+        }
     }
 }
