@@ -36,12 +36,21 @@ namespace Kamu.ModelFramework
 
         public virtual void CopyFrom(Model model)
         {
-            if(!GetType().IsAssignableFrom(model.GetType()))
+            Type type = GetType();
+
+            if(!type.IsAssignableFrom(model.GetType()))
                 throw new InvalidCastException();
 
-            foreach(var f in GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+            while(type != typeof(Model))
             {
-                f.SetValue(this, f.GetValue(model));
+                foreach(var f in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+                {
+                    if(f.GetCustomAttribute(typeof(NoCopyAttribute)) == null)
+                    {
+                        f.SetValue(this, f.GetValue(model));
+                    }
+                }
+                type = type.BaseType;
             }
         }
 

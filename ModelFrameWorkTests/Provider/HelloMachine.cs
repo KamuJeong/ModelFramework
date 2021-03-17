@@ -26,7 +26,9 @@ namespace Kamu.ModelFrameworkTests
                 case "good":
                     return new GoodModel();
                 case "greeting":
-                    return new HelloModel(good: Models.Get<GoodModel>(Uri.Model("good")), empty: Models.Get<EmptyModel>(Uri.Scheme("empty").Model("empty")));
+                    return new HelloModel();
+                case "guy":
+                    return new HelloGuyModel();
             }
             return null;
         }
@@ -41,12 +43,12 @@ namespace Kamu.ModelFrameworkTests
 
         protected override bool Loading(Model model) => LoadModel((dynamic)model);
 
-        private bool LoadModel(EmptyModel model) => true;
-
         private bool LoadModel(GoodModel model) => true;
 
         private bool LoadModel(HelloModel model)
         {
+            model.Good = Models.Get<GoodModel>(Uri.Model("good"));
+            model.Empty = Models.Get<EmptyModel>(Uri.Scheme("empty").Model("empty"));
             model.Greeting = "Hello";
             return true;
         }

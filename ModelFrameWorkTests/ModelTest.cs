@@ -34,7 +34,7 @@ namespace Kamu.ModelFrameworkTests
 
         #region [Simple model]
         [TestMethod]
-        public void CouldCopyFromOtherModel()
+        public void ShouldCopyFromOtherModelWithSameType()
         {
             var model = Inventory.Get<HelloModel>(Name);
             model.Detach();
@@ -42,11 +42,30 @@ namespace Kamu.ModelFrameworkTests
 
             model.Greeting = "Detached Hello Model";
             Assert.AreNotEqual(model.Greeting, modelNew.Greeting);
+            Assert.IsFalse(modelNew.DetachedCallback);
 
             model.CopyFrom(modelNew);
+
             Assert.AreEqual(model.Greeting, modelNew.Greeting);
-            Assert.IsFalse(model.DetachedCallback);
+            Assert.IsTrue(model.DetachedCallback);              // it was marked as [NoCopy]!!
         }
+
+        [TestMethod]
+        public void ShouldCopyBaseFieldsAsWellAsCurrentOnes()
+        {
+            var model = Inventory.Get<HelloGuyModel>(Name.Model("guy"));
+            model.Name = "Who r u?";
+            model.Detach();
+
+            var modelNew = Inventory.Get<HelloGuyModel>(Name.Model("guy"));
+            model.Name = "Kamu";
+            model.Greeting = "Hello";
+            Assert.AreNotEqual(model.Greeting, modelNew.Greeting);
+
+            model.CopyFrom(modelNew);
+
+            Assert.AreEqual(model.Greeting, modelNew.Greeting);
+        }        
 
         [TestMethod]
         public void CouldRespondToSave()

@@ -6,22 +6,25 @@ namespace Kamu.ModelFrameworkTests
 { 
     class HelloModel : Model
     {
-        public EmptyModel Empty { get; }
-
-        public GoodModel Good { get; }
-
-
-
-        public HelloModel(GoodModel good, EmptyModel empty)
+        [NoCopy]    private EmptyModel _empty;
+        public EmptyModel Empty 
         {
-            Good = good;
-            Empty = empty;
+            get => _empty;
+            set => _empty = value;
+        }
 
+        [NoCopy]    private GoodModel _good;
+        public GoodModel Good
+        {
+            get => _good;
+            set => _good = value;
+        }
+
+        public HelloModel()
+        {
             this.Changed += ModelChanged;
             this.Detached += (s, e) => DetachedCallback = true; 
         }
-
-
 
         private void ModelChanged(object sender, EventArgs e)
         {
@@ -33,11 +36,17 @@ namespace Kamu.ModelFrameworkTests
 
         public string Greeting { get; set; }
 
-        public List<ChangingSource> ChangingEvents { get; } = new List<ChangingSource>();
+        [NoCopy]    private List<ChangingSource> _changingEvents = new List<ChangingSource>();
+        public List<ChangingSource> ChangingEvents => _changingEvents; 
 
         public int ChangedCount => ChangingEvents.Count;
 
-        public bool DetachedCallback { get; private set; }
+        [NoCopy]    private bool _detachedCallback;
+        public bool DetachedCallback 
+        { 
+            get => _detachedCallback;
+            private set => _detachedCallback = value;
+        }
 
         public void WhoAreYou() => (Provider as HelloMachine)?.WhoAreYou();
     }
