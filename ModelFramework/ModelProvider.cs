@@ -116,12 +116,7 @@ namespace Kamu.ModelFramework
             var temp = Create(model.Uri.Model());
             temp.CopyFrom(model);
 
-            if(await InvokeAsync(() => Saving(temp)))
-            {
-                model.CopyFrom(temp);
-                return true;
-            }
-            return false;
+            return await InvokeAsync(() => Saving(temp));
         }
 
         protected abstract bool Saving(Model model);

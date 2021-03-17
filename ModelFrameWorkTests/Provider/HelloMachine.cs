@@ -57,7 +57,7 @@ namespace Kamu.ModelFrameworkTests
 
         #region [Save]
 
-        protected override bool Saving(Model model) => SaveModel((dynamic)model, ChangingSource.Save);
+        protected override bool Saving(Model model) => SaveModel((dynamic)model);
 
         public static Dictionary<string, string> Responses = new Dictionary<string, string>
         {
@@ -65,12 +65,13 @@ namespace Kamu.ModelFrameworkTests
             ["how are you?"] = "I'm fine"
         };
 
-        private bool SaveModel(HelloModel model, ChangingSource source)
+        private bool SaveModel(HelloModel model)
         {
             try
             {
-                model.Greeting = Responses[model.Greeting.ToLower()];
-                InvokeChanged(model, source);
+                var greet = Models.Get<HelloModel>(Uri.Model("greeting"));
+                greet.Greeting = Responses[model.Greeting.ToLower()];
+                InvokeChanged(greet, ChangingSource.Save);
                 return true;
             }
             catch (KeyNotFoundException)
@@ -79,7 +80,7 @@ namespace Kamu.ModelFrameworkTests
             }
         }
 
-        private bool SaveModel(GoodModel model, ChangingSource source)
+        private bool SaveModel(GoodModel model)
         {
             var greet = Models.Get<HelloModel>(Uri.Model("greeting"));
 
@@ -98,7 +99,7 @@ namespace Kamu.ModelFrameworkTests
                     greet.Greeting = "Good evening!";
                     break;
             }
-            InvokeChanged(greet, source);
+            InvokeChanged(greet, ChangingSource.Save);
 
             return true;
         }
