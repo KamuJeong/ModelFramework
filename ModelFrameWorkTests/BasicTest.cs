@@ -49,6 +49,22 @@ namespace Kamu.ModelFrameworkTests
         }
 
         [TestMethod]
+        public void ShouldGetKeyFragmentFromModelURI()
+        {
+            Uri modelUri = new Uri("pump://here/?information#1");
+
+            Assert.AreEqual("1", modelUri.Key());
+        }
+
+        [TestMethod]
+        public void ShouldChangeKeyFragmentFromModelURI()
+        {
+            Uri modelUri = new Uri("pump://here/?information#1");
+
+            Assert.AreEqual(new Uri("pump://here/?information#2"), modelUri.Key("2"));
+        }
+
+        [TestMethod]
         public void ShouldCompareLocationOfURIs()
         {
             Uri pumpInformation = new Uri("pump://here/?information");
